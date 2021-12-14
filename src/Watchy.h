@@ -60,5 +60,6 @@ extern RTC_DATA_ATTR int menuIndex;
 extern RTC_DATA_ATTR BMA423 sensor;
 extern RTC_DATA_ATTR bool WIFI_CONFIGURED;
 extern RTC_DATA_ATTR bool BLE_CONFIGURED;
+extern RTC_DATA_ATTR bool displayFullInit;
 
 #endif

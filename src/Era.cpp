@@ -5,11 +5,15 @@ void Era::init(String datetime){
     wakeup_reason = esp_sleep_get_wakeup_cause(); //get wake up reason
     Wire.begin(SDA, SCL); //init i2c
     Watchy::RTC.init();
+
     configBtServer = new ConfigBtServer(display);
+
+    display.init(0, displayFullInit, 10, true); // 10ms by spec, and fast pulldown reset
+    display.epd2.setBusyCallback(displayBusyCallback);
+    
     switch (wakeup_reason)
     {
         case ESP_SLEEP_WAKEUP_EXT0: //RTC Alarm
-            RTC.clearAlarm(); //resets the alarm flag in the RTC
             if(guiState == WATCHFACE_STATE){
                 if(IN_BT_SETUP != 1) {
                   RTC.read(currentTime);
