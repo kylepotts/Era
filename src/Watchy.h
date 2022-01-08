@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <WiFiManager.h>
 #include <HTTPClient.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 #include <Arduino_JSON.h>
 #include <GxEPD2_BW.h>
 #include <Wire.h>
@@ -17,15 +19,32 @@
 typedef struct weatherData{
     int8_t temperature;
     int16_t weatherConditionCode;
+    bool isMetric;
+    String weatherDescription;
 }weatherData;
+
+typedef struct watchySettings{
+    //Weather Settings
+    String cityID;
+    String weatherAPIKey;
+    String weatherURL;
+    String weatherUnit;
+    String weatherLang;
+    int8_t weatherUpdateInterval;
+    //NTP Settings
+    String ntpServer;
+    int gmtOffset;
+    int dstOffset;
+}watchySettings;
 
 class Watchy {
     public:
         static WatchyRTC RTC;
         static GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display;
         tmElements_t currentTime;
+        watchySettings settings;
     public:
-        Watchy();
+        explicit Watchy(const watchySettings& s) : settings(s){} //constructor
         void init(String datetime = "");
         void deepSleep();
         static void displayBusyCallback(const void*);
@@ -35,14 +54,18 @@ class Watchy {
         void handleButtonPress();
         void showMenu(byte menuIndex, bool partialRefresh);
         void showFastMenu(byte menuIndex);
-        void showBattery();
+        void showAbout();
         void showBuzz();
         void showAccelerometer();
         void showUpdateFW();
+        void showSyncNTP();
+        bool syncNTP();
+        bool syncNTP(long gmt, int dst, String ntpServer);
         void setTime();
         void setupWifi();
         bool connectWiFi();
         weatherData getWeatherData();
+        weatherData getWeatherData(String cityID, String units, String lang, String url, String apiKey, uint8_t updateInterval);
         void updateFWBegin();
 
         void showWatchFace(bool partialRefresh);

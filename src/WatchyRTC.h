@@ -3,9 +3,11 @@
 
 #include <DS3232RTC.h>
 #include <Rtc_Pcf8563.h>
+#include "config.h"
+#include "time.h"
 
-#define DS3231 0
-#define PCF8563 1
+#define DS3231 1
+#define PCF8563 2
 #define RTC_DS_ADDR 0x68
 #define RTC_PCF_ADDR 0x51
 #define YEAR_OFFSET_DS 1970
@@ -19,7 +21,7 @@ class WatchyRTC {
     public:
         WatchyRTC();
         void init();
-        void config(String datetime);
+        void config(String datetime); //String datetime format is YYYY:MM:DD:HH:MM:SS
         void clearAlarm();
         void read(tmElements_t &tm);
         void set(tmElements_t tm);

@@ -93,7 +93,7 @@ void Era::drawWatchFace(){
     display.setCursor(20, 160);
     
     display.setFont(&FreeMonoBold9pt7b);
-    display.print(currentTime.Year+2000);
+    display.print(tmYearToY2k(currentTime.Year) + 2000);
     display.print("/");
     display.print(currentTime.Month);
     display.print("/");

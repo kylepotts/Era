@@ -1,6 +1,7 @@
-#include"Era.h"
+#include "Era.h"
+#include "settings.h"
 
-Era watchy;
+Era watchy(settings);
 
 void setup(){
     Serial.begin(115200);

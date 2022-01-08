@@ -38,6 +38,6 @@ char* BLETimeCharacteristic::parseDateTime() {
     } else {
         sprintf(min, "%hd", currentTime.Minute);
     }
-    snprintf(t, 100, "%hd:%hd:%hd:%s:%s", currentTime.Year + 2000 ,currentTime.Month, currentTime.Day,hour, min);
+    snprintf(t, 100, "%hd:%hd:%hd:%s:%s", tmYearToY2k(currentTime.Year) + 2000 ,currentTime.Month, currentTime.Day,hour, min);
     return t;
 };

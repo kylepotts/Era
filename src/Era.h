@@ -1,7 +1,8 @@
-#include"Watchy.h"
+#include "Watchy.h"
 #include "services/bt/config_bt_server.h"
 
 class Era : public Watchy {
+    using Watchy::Watchy;
     public:
         void init(String datetime = "");
         virtual void showMenu(byte menuIndex, bool partialRefresh);
